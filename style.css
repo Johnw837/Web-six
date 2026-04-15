@@ -1,46 +1,34 @@
 body {
   margin: 0;
+  overflow: hidden;
   background: black;
-  color: white;
-  overflow: hidden;
 }
 
-/* LANDSCAPE GAME */
-#camera {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
+/* ROTATE GAME FOR MOBILE */
 #game {
-  width: 5000px;
-  height: 100%;
+  width: 100vh;
+  height: 100vw;
+  transform: rotate(90deg);
+  transform-origin: center;
   position: absolute;
-  background: linear-gradient(#111, #222);
+  top: 0;
+  left: 0;
+  background: linear-gradient(#111, #333);
 }
 
-/* PLAYER (ANIMATED LOOK) */
+/* PLAYER */
 #player {
-  width: 50px;
-  height: 50px;
-  background: white;
+  width: 60px;
   position: absolute;
-  border-radius: 10px;
-  transition: transform 0.1s;
 }
 
-/* RUN ANIMATION */
-.running {
-  transform: scaleX(1.1);
-}
-
-.jumping {
-  transform: scaleY(1.2);
-}
-
-.attacking {
-  background: yellow;
+/* GROUND */
+#ground {
+  position: absolute;
+  bottom: 0;
+  width: 2000px;
+  height: 60px;
+  background: #444;
 }
 
 /* OBSTACLES */
@@ -53,28 +41,27 @@ body {
 
 /* UI */
 .ui {
-  position: absolute;
+  position: fixed;
   top: 10px;
   left: 10px;
-  font-size: 18px;
+  color: white;
 }
 
 /* CONTROLS */
 .controls {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.left-controls, .right-controls {
+.left, .right {
   display: flex;
   gap: 10px;
   padding: 10px;
 }
 
 button {
-  font-size: 25px;
-  padding: 10px;
+  font-size: 20px;
 }
