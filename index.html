@@ -6,33 +6,26 @@
 </head>
 <body>
 
-<div id="camera">
-  <div id="game">
+<div id="game">
+  <img id="player" src="ninja_idle.png">
 
-    <div id="player"></div>
-
-  </div>
+  <div id="ground"></div>
 </div>
 
 <div class="ui">
   <p id="health">Health: 100</p>
 </div>
 
-<!-- CONTROLS -->
 <div class="controls">
-
-  <!-- LEFT SIDE -->
-  <div class="left-controls">
+  <div class="left">
     <button ontouchstart="moveLeft(true)" ontouchend="moveLeft(false)">◀</button>
     <button ontouchstart="moveRight(true)" ontouchend="moveRight(false)">▶</button>
   </div>
 
-  <!-- RIGHT SIDE -->
-  <div class="right-controls">
+  <div class="right">
     <button ontouchstart="jump()">⤒</button>
     <button ontouchstart="attack()">⚔</button>
   </div>
-
 </div>
 
 <script src="game.js"></script>
