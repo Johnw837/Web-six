@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ninja Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="camera">
+  <div id="game">
+
+    <div id="player"></div>
+    <div id="enemy"></div>
+
+    <div class="platform ground"></div>
+    <div class="platform" style="left:300px; top:250px; width:150px;"></div>
+    <div class="platform" style="left:600px; top:200px; width:150px;"></div>
+
+  </div>
+</div>
+
+<div class="ui">
+  <p id="health">Health: 100</p>
+</div>
+
+<div class="controls">
+  <button ontouchstart="moveLeft(true)" ontouchend="moveLeft(false)">◀</button>
+  <button ontouchstart="moveRight(true)" ontouchend="moveRight(false)">▶</button>
+  <button ontouchstart="jump()">⤒</button>
+  <button ontouchstart="attack()">⚔</button>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
