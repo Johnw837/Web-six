@@ -1,26 +1,22 @@
 let player = document.getElementById("player");
-let enemy = document.getElementById("enemy");
 let game = document.getElementById("game");
 let healthText = document.getElementById("health");
 
-// PLAYER STATE
-let x = 50;
-let y = 260;
+let x = 100;
+let y = window.innerHeight - 120;
 let velocityY = 0;
-let gravity = 0.5;
+let gravity = 0.6;
 let jumping = false;
 
 let moveL = false;
 let moveR = false;
 
 let attacking = false;
-let attackRange = 50;
 
 let health = 100;
 
-// ENEMY
-let enemyX = 500;
-let enemyDir = 1;
+// OBSTACLES
+let obstacles = [];
 
 // CONTROLS
 function moveLeft(state) { moveL = state; }
@@ -28,54 +24,96 @@ function moveRight(state) { moveR = state; }
 
 function jump() {
   if (!jumping) {
-    velocityY = -10;
+    velocityY = -12;
     jumping = true;
   }
 }
 
 function attack() {
   attacking = true;
-  setTimeout(() => attacking = false, 300);
+  player.classList.add("attacking");
+  setTimeout(() => {
+    attacking = false;
+    player.classList.remove("attacking");
+  }, 200);
 }
 
-// COLLISION CHECK
-function isColliding(x1,y1,w1,h1,x2,y2,w2,h2){
-  return x1 < x2+w2 && x1+w1 > x2 &&
-         y1 < y2+h2 && y1+h1 > y2;
+// CREATE OBSTACLES
+function spawnObstacle() {
+  let obs = document.createElement("div");
+  obs.classList.add("obstacle");
+
+  let obsX = x + window.innerWidth + Math.random()*300;
+  let obsY = window.innerHeight - 120;
+
+  obs.style.left = obsX + "px";
+  obs.style.top = obsY + "px";
+
+  game.appendChild(obs);
+
+  obstacles.push({element: obs, x: obsX, y: obsY});
+}
+
+// COLLISION
+function isColliding(a, b) {
+  return (
+    a.x < b.x + 50 &&
+    a.x + 50 > b.x &&
+    a.y < b.y + 50 &&
+    a.y + 50 > b.y
+  );
 }
 
 // GAME LOOP
 function gameLoop() {
 
   // MOVEMENT
-  if (moveL) x -= 3;
-  if (moveR) x += 3;
+  if (moveL) {
+    x -= 4;
+    player.classList.add("running");
+  }
+  if (moveR) {
+    x += 4;
+    player.classList.add("running");
+  }
+  if (!moveL && !moveR) {
+    player.classList.remove("running");
+  }
 
   // GRAVITY
   velocityY += gravity;
   y += velocityY;
 
-  if (y >= 260) {
-    y = 260;
+  if (y >= window.innerHeight - 120) {
+    y = window.innerHeight - 120;
     jumping = false;
+    player.classList.remove("jumping");
+  } else {
+    player.classList.add("jumping");
   }
 
-  // ENEMY AI (patrol)
-  enemyX += enemyDir * 2;
-  if (enemyX > 700 || enemyX < 400) enemyDir *= -1;
+  // SPAWN OBSTACLES
+  if (Math.random() < 0.02) spawnObstacle();
 
-  // PLAYER HIT ENEMY
-  if (attacking && Math.abs(x - enemyX) < attackRange) {
-    enemy.style.display = "none";
-  }
+  // UPDATE OBSTACLES
+  obstacles.forEach((obs, i) => {
+    obs.x -= 5;
+    obs.element.style.left = obs.x + "px";
 
-  // ENEMY DAMAGE PLAYER
-  if (isColliding(x,y,40,40,enemyX,260,40,40)) {
-    health -= 0.2;
-  }
+    // COLLISION FIXED (SOLID)
+    if (isColliding({x,y}, obs)) {
+      health -= 1;
+    }
 
-  // UPDATE UI
-  healthText.innerText = "Health: " + Math.floor(health);
+    // REMOVE OFFSCREEN
+    if (obs.x < -50) {
+      obs.element.remove();
+      obstacles.splice(i,1);
+    }
+  });
+
+  // HEALTH
+  healthText.innerText = "Health: " + health;
 
   if (health <= 0) {
     alert("Game Over");
@@ -83,13 +121,11 @@ function gameLoop() {
   }
 
   // CAMERA FOLLOW
-  game.style.left = (-x + 100) + "px";
+  game.style.left = (-x + 150) + "px";
 
-  // APPLY POSITIONS
+  // APPLY PLAYER POS
   player.style.left = x + "px";
   player.style.top = y + "px";
-
-  enemy.style.left = enemyX + "px";
 
   requestAnimationFrame(gameLoop);
 }
