@@ -13,7 +13,7 @@ let moveR = false;
 let health = 100;
 
 // ANIMATION FRAMES
-let frames = ["ninja_idle.png","ninja_run1.png","ninja_run2.png"];
+let frames = ["ninja_idle.jpg","ninja_run1.jpg","ninja_run2.jpg"];
 let frameIndex = 0;
 
 // OBSTACLES
@@ -30,7 +30,7 @@ function jump(){
 }
 
 function attack(){
-  player.src = "ninja_attack.png";
+  player.src = "ninja_attack.jpg";
   setTimeout(()=> player.src = frames[0],200);
 }
 
