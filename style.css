@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  text-align: center;
+}
+
+#camera {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+#game {
+  width: 2000px;
+  height: 400px;
+  position: absolute;
+  background: #111;
+}
+
+#player {
+  width: 40px;
+  height: 40px;
+  background: white;
+  position: absolute;
+}
+
+#enemy {
+  width: 40px;
+  height: 40px;
+  background: red;
+  position: absolute;
+  left: 500px;
+  top: 260px;
+}
+
+.platform {
+  height: 20px;
+  background: green;
+  position: absolute;
+}
+
+.ground {
+  width: 2000px;
+  top: 300px;
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+button {
+  font-size: 20px;
+  margin: 5px;
+}
+
+.ui {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
